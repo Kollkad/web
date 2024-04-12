@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+void chek_mass(char mass[3][3])
+{
+    for(int i = 0; i < 3; i++)
+    {
+        for(int q = 0; q < 3; q++)
+        {
+            cout << mass[i][q] << "  ";
+        }
+        cout << endl;
+    }
+}
+int main()
+{
+    srand(time(0));
+    unsigned short int point_x = 2;
+    unsigned short int point_y = 2;
+    char hod;
+    char mass[3][3]{{'1','2','3'},{'4','5','6'},{'7','8','H'}};
+    for(int i = 0; i < 3; i++)
+    {
+        for(int q = 0; q < 3; q++)
+        {
+            unsigned short int x = rand() % 3;
+            unsigned short int y = rand() % 3;
+            if(mass[y][x] != 'H' && mass[i][q] != 'H')
+            {
+                char vova = mass[y][x];
+                mass[y][x] = mass[i][q];
+                mass[i][q] = vova;
+            }
+        }
+    }
+    chek_mass(mass);
+    while(true)
+    {
+        unsigned short int point_x_old = point_x;
+        unsigned short int point_y_old = point_y;
+        cout << "Введите w, a, s, d" << endl;
+        cin >> hod;
+        if(hod == 'w' && point_y > 0){point_y -= 1;}
+        else if(hod == 's' && point_y < 2){point_y += 1;}
+        else if(hod == 'd' && point_x < 2){point_x += 1;}
+        else if(hod == 'a' && point_x > 0){point_x -= 1;}
+        else{"вы вышли за край";}
+        mass[point_y_old][point_x_old] = mass[point_y][point_x];
+        mass[point_y][point_x] = 'H';
+        chek_mass(mass);
+    }
+}
